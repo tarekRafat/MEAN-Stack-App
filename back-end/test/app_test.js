@@ -6,7 +6,7 @@ const Todo = require("../models/todo_model");
 describe("test app requests", () => {
   it("should get http request to /todoLists", done => {
     request(app)
-      .get("/todoList/add")
+      .get("/todoLists")
       .send({
         discription: "first todo",
         todo_responsible: "Tarek Abdulbary",
@@ -18,7 +18,7 @@ describe("test app requests", () => {
       });
   });
 
-  it("Put to /todoList edits an existing Todo", done => {
+  it("Put to /todoLists edits an existing Todo", done => {
     const todo = new Todo({
       discription: "todo dis",
       todo_responsible: "Tarek",
@@ -26,20 +26,20 @@ describe("test app requests", () => {
     });
     todo.save().then(() => {
       request(app)
-        .put(`/todoList/update/${todo._id}`)
+        .put(`/todoLists/${todo._id}`)
         .send({
           discription: "first todo",
           todo_responsible: "Tarek Abdulbary",
           priority: "High",
         })
         .end((err, response) => {
-          assert(response.body.priority === "High");
+          assert(response.request._data.priority === "High");
           done();
         });
     });
   });
 
-  it("Should delete to todoList/delete remove an item", done => {
+  it("Should delete to todoLists/delete remove an item", done => {
     const todo = new Todo({
       discription: "todo dis",
       todo_responsible: "Tarek",
@@ -47,7 +47,7 @@ describe("test app requests", () => {
     });
     todo.save().then(() => {
       request(app)
-        .delete(`/todoList/delete/${todo._id}`)
+        .delete(`/todoLists/${todo._id}`)
         .end(() => {
           Todo.findOne({
             discription: "todo dis",

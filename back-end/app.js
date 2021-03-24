@@ -31,8 +31,8 @@ if (process.env.NODE_ENV !== "test") {
 
 app.use(bodyParser.json());
 app.use("/", router);
-// app.use((err, req, res) => {
-//   console.log(err);
-// });
+app.use("*", (req, res) => {
+  res.status(404).send("Page Is Not Found");
+});
 
 module.exports = app;

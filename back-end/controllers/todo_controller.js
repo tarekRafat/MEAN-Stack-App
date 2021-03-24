@@ -3,7 +3,7 @@ module.exports = {
   //finds all todolist in database
   getTodos: (req, res) => {
     Todo.find().then(data => {
-      res.send(data);
+      res.status(200).send(data);
     });
   },
 
@@ -11,19 +11,19 @@ module.exports = {
     reqId = req.params.id;
     Todo.findById({ _id: reqId })
       .then(todo => {
-        res.send(todo);
+        res.status(200).send(todo);
       })
-      .catch(err => res.status(422).send({ error: err }));
+      .catch(err => res.status(422).send({ err: err.message }));
   },
 
   create: (req, res) => {
     todoProps = req.body;
     Todo.create(todoProps)
-      .then(todo => res.send(todo))
+      .then(todo => res.status(201).send())
       .catch(err => res.status(422).send({ err: err.message }));
   },
 
-  update: (req, res) => {
+  edit: (req, res) => {
     reqId = req.params.id;
     let { discription, todo_responsible, priority } = req.body;
     let updateValues = {
@@ -33,21 +33,18 @@ module.exports = {
     };
     Todo.findOneAndUpdate({ _id: reqId }, updateValues)
       .then(() => Todo.findById({ _id: reqId }))
-      .then(todo => res.send(todo))
+      .then(todo => {
+        return res.status(204).send(todo);
+      })
       .catch(err => res.status(422).send({ err: err.message }));
-    // Todo.findOne({ _id: reqId })
-    //   .update({ _id: reqId }, { updateValues })
-    //   .then(updateData => {
-    //     res.send(updateData);
-    //   });
   },
   delete: (req, res) => {
     reqId = req.params.id;
     Todo.find({ _id: reqId })
       .deleteOne()
-      .then(todo =>
-        res.send({ deletedTodo: "Success", count: todo.deletedCount })
-      )
+      .then(todo => {
+        return res.status(204).send();
+      })
       .catch(err => res.status(422).send({ error: err }));
   },
 };
