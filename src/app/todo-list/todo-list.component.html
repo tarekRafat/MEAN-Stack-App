@@ -1,0 +1,23 @@
+<table class="table caption-top">
+  <caption>
+    List of Todos
+  </caption>
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Responisble</th>
+      <th>Priority</th>
+      <th>Edit</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let todo of todos">
+    <tr>
+      <td>Description: {{ todo.discription }}</td>
+      <td>Description: {{ todo.responisble }}</td>
+      <td>Description: {{ todo.priority }}</td>
+      <td><button class="btn btn-primary">Edit</button></td>
+      <td><button class="btn btn-danger">Delete</button></td>
+    </tr>
+  </tbody>
+</table>

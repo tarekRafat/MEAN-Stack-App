@@ -1,0 +1,105 @@
+<div>
+  <h3>Create New Todo</h3>
+  <form #myForm="ngForm" (ngSubmit)="createTodo(myForm.value)">
+    <div class="form-group">
+      <div class="d-flex justify-content-between">
+        <label htmlFor="des">Description</label>
+        <span
+          class="error"
+          *ngIf="
+            myForm.controls.todo_description?.invalid &&
+            (myForm.controls.todo_description.touched || create)
+          "
+        >
+          Required
+        </span>
+      </div>
+      <input
+        required
+        type="text"
+        (ngModel)="(todo_description)"
+        name="todo_description"
+        id="des"
+        class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <div class="d-flex justify-content-between">
+        <label htmlFor="res">Responsible</label>
+        <span
+          class="error"
+          *ngIf="
+            myForm.controls.todo_responsible?.invalid &&
+            (myForm.controls.todo_responsible?.touched || create)
+          "
+        >
+          Required
+        </span>
+      </div>
+      <input
+        required
+        type="text"
+        (ngModel)="(todo_responsible)"
+        name="todo_responsible"
+        id="res"
+        class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <div class="form-check form-check-inline">
+        <input
+          required
+          (ngModel)="(todo_priority)"
+          type="radio"
+          class="form-check-input"
+          name="todo_priority"
+          value="Medium"
+        />
+        <label class="form-check-label">Medium</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="form-check form-check-inline">
+        <input
+          required
+          type="radio"
+          (ngModel)="(todo_priority)"
+          class="form-check-input"
+          name="todo_priority"
+          value="High"
+        />
+        <label class="form-check-label">High</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="form-check form-check-inline">
+        <input
+          required
+          type="radio"
+          (ngModel)="(todo_priority)"
+          class="form-check-input"
+          name="todo_priority"
+          value="Low"
+        />
+        <label class="form-check-label">Low</label>
+      </div>
+      <span
+        class="error"
+        *ngIf="
+          myForm.controls.todo_priority?.invalid &&
+          (myForm.controls.todo_priority.touched || create)
+        "
+      >
+        Please Select One
+      </span>
+    </div>
+
+    <button [disabled]="!myForm.valid" type="submit" class="btn btn-primary">
+      <span (mouseenter)="create = true" (mouseleave)="create = false">
+        Create Todo
+      </span>
+    </button>
+  </form>
+</div>
